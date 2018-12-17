@@ -8,6 +8,7 @@ package utils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,12 +21,14 @@ public class FileReader {
         this.path = path;
     }
     
-    public Object[] fileStream() throws FileNotFoundException {
+    public ArrayList<String> fileStream() throws FileNotFoundException {
         File f = new File(this.path);
         java.io.FileReader fr = new java.io.FileReader(f);
         BufferedReader br = new BufferedReader(fr);
-        String s;
+        ArrayList<String> arrayStrings = new ArrayList<>();
         Object[] stream = br.lines().toArray();
-        return stream;
+        for (Object obj : stream)
+            arrayStrings.add((String) obj);
+        return arrayStrings;
     }
 }
