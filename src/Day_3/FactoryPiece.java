@@ -14,11 +14,11 @@ import utils.Matrix;
  *
  * @author dynnammo
  */
-public class FabricPiece {
-    ArrayList<int[]> claims;
+public class FactoryPiece {
+    ArrayList<Claim> claims;
     Matrix piece;
 
-    public FabricPiece() {
+    public FactoryPiece() {
         piece = new Matrix(1000);
         claims = new ArrayList<>();
     }
@@ -27,27 +27,16 @@ public class FabricPiece {
     
     public void parseClaims(String path) throws FileNotFoundException{
         for (String claimString : new FileReader(path).fileStream()) {
-            String[] splited = claimString.split(" ");
-            String[] distances = {splited[2].split(",")[0],splited[2].split(",")[1]};
-            int leftDistance = Integer.parseInt(distances[0]);
-            int topDistance = Integer.parseInt(distances[1].substring(0, distances[1].length()-1));
-            int rowNumber = Integer.parseInt(splited[3].split("x")[0]);
-            int columnNumber = Integer.parseInt(splited[3].split("x")[1]);
-            int[] claimParsed = {
-                leftDistance,
-                topDistance,
-                rowNumber,
-                columnNumber
-            };
-            claims.add(claimParsed);
+            Claim c = new Claim();
+            c.parseString(claimString);
+            claims.add(c);
         }
     }
 
     protected void executeClaims() {
-        for (int[] claim : claims) {
+        for (Claim claim : claims) {
             Matrix m = new Matrix(1000);
-            int[] size = {claim[2],claim[3]};
-            m.fillSquare(claim[0], claim[1], size);
+            m.fillSquare(claim);
             piece.sum(m);
         }
     }

@@ -5,6 +5,8 @@
  */
 package utils;
 
+import Day_3.Claim;
+
 /**
  *
  * @author dynnammo
@@ -29,9 +31,9 @@ public class Matrix {
         }
     }
     
-    public void fillSquare(int leftDistance, int topDistance,int[] size){
-        for (int j = topDistance; j < topDistance+size[1]; j++) {
-            for (int i = leftDistance; i < leftDistance+size[0]; i++) {
+    public void fillSquare(Claim c){
+        for (int j = c.topDistance; j < c.topDistance+c.size[1]; j++) {
+            for (int i = c.leftDistance; i < c.leftDistance+c.size[0]; i++) {
                 m[j][i] = 1;
             }
         }

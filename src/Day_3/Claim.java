@@ -19,8 +19,22 @@ public class Claim {
         this.topDistance = topDistance;
         this.size = size;
     }
-    
-    
+
+    Claim() {
+        
+    }
+
+    public void parseString(String claimString) {
+        String[] splited = claimString.split(" ");
+        String[] distances = {splited[2].split(",")[0],splited[2].split(",")[1]};
+        leftDistance = Integer.parseInt(distances[0]);
+        topDistance = Integer.parseInt(distances[1].substring(0, distances[1].length()-1));
+        size = new int[] {
+            Integer.parseInt(splited[3].split("x")[0]),
+            Integer.parseInt(splited[3].split("x")[1])
+        }; 
+    }
 }
+
 
 

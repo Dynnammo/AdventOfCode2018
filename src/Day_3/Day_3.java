@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 public class Day_3 {
     public static void main(String[] args) throws FileNotFoundException{
         String path = System.getProperty("user.dir") + "/src/Day_3/FabricPiece.txt";
-        FabricPiece fp = new FabricPiece();
+        FactoryPiece fp = new FactoryPiece();
         fp.parseClaims(path);
         fp.executeClaims();
         int overlap = fp.getOverlapClaims();
