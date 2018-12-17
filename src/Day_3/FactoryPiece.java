@@ -8,18 +8,20 @@ package Day_3;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import utils.FileReader;
+import utils.MainClass;
 import utils.Matrix;
 
 /**
  *
  * @author dynnammo
  */
-public class FactoryPiece {
+public class FactoryPiece extends MainClass{
     ArrayList<Claim> claims;
     Matrix piece;
     int size;
 
-    public FactoryPiece(int size) {
+    public FactoryPiece(int size, String path) {
+        super(path);
         this.size=size;
         piece = new Matrix(size);
         claims = new ArrayList<>();
@@ -27,8 +29,8 @@ public class FactoryPiece {
             
     
     
-    public void parseClaims(String path) throws FileNotFoundException{
-        for (String claimString : new FileReader(path).fileStream()) {
+    public void parseClaims() throws FileNotFoundException{
+        for (String claimString : new FileReader(this.getPath()).fileStream()) {
             Claim c = new Claim();
             c.parseString(claimString);
             claims.add(c);

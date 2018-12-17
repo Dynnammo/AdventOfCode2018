@@ -6,12 +6,13 @@
 package Day_2;
 
 import java.io.FileNotFoundException;
+import utils.MainClass;
 
 /**
  *
  * @author baptiste
  */
-public class Day2 {
+public class Day2{
     public static void main(String[] args) throws FileNotFoundException{
         Checksum checksum = new Checksum(System.getProperty("user.dir")+"/src/Day_2/boxIDs.txt");
         

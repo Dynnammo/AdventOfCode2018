@@ -19,13 +19,11 @@ public class Day1 {
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
         //First exercise
-        Frequency freq1 = new Frequency();
-        freq1.setPath(System.getProperty("user.dir") + "/src/Day_1/frequency.txt");
+        Frequency freq1 = new Frequency(System.getProperty("user.dir") + "/src/Day_1/frequency.txt");
         freq1.analyseFile();
         
         //Second exercise
-        Frequency freq2 = new Frequency();
-        freq2.setPath(System.getProperty("user.dir")+"/src/Day_1/frequency.txt");
+        Frequency freq2 = new Frequency(System.getProperty("user.dir")+"/src/Day_1/frequency.txt");
         freq2.getRepeatedSequence();
         System.out.println(freq2.valueRepeated);
     }

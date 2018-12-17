@@ -11,27 +11,34 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileSystemException;
 import java.util.ArrayList;
+import utils.MainClass;
 /**
  *
  * @author baptiste
  */
-public class Frequency {
+public class Frequency extends MainClass{
     protected int valueRepeated;
     protected int sum;
-    protected String path;
     protected ArrayList array;
     
     
     public Frequency(){
+        super();
         valueRepeated = Integer.MAX_VALUE;
         sum = 0;
-        path = "";
         array = new ArrayList();
+    }
+
+    public Frequency(String path) {
+        super(path);
+        array = new ArrayList();
+        valueRepeated = Integer.MAX_VALUE;
+        sum = 0;
     }
     
     public void analyseFile() throws FileSystemException, FileNotFoundException, IOException{
         array.clear();
-        for (String s : new FileReader(path).fileStream()){
+        for (String s : new FileReader(this.getPath()).fileStream()){
             char operation = s.charAt(0);
             int i = Integer.parseInt(s.substring(1));
             if (operation == '+')
@@ -56,9 +63,5 @@ public class Frequency {
                     bt.insertNode(i);
             }
         }
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }

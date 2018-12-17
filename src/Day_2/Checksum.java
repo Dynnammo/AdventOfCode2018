@@ -9,13 +9,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import utils.Dictionnary;
 import utils.FileReader;
+import utils.MainClass;
 
 /**
  *
  * @author baptiste
  */
-public class Checksum {
-    protected String path;
+public class Checksum  extends MainClass{
     ArrayList<BoxID> boxList;
     int doubles;
     int triples;
@@ -23,7 +23,7 @@ public class Checksum {
     String prototype;
 
     public Checksum(String path) throws FileNotFoundException {
-        this.path = path;
+        super(path);
         boxList = new ArrayList<>();
         for (String boxID : new FileReader(path).fileStream())
             boxList.add(new BoxID(boxID));
