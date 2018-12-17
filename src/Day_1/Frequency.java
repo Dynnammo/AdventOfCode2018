@@ -31,10 +31,7 @@ public class Frequency {
     
     public void analyseFile() throws FileSystemException, FileNotFoundException, IOException{
         array.clear();
-        Object[] stream = new FileReader(this.path).fileStream();
-        String s = "";
-        for (Object line : stream){
-            s = (String) line;
+        for (String s : new FileReader(path).fileStream()){
             char operation = s.charAt(0);
             int i = Integer.parseInt(s.substring(1));
             if (operation == '+')

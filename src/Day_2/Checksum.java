@@ -25,8 +25,8 @@ public class Checksum {
     public Checksum(String path) throws FileNotFoundException {
         this.path = path;
         boxList = new ArrayList<>();
-        for (Object boxID : new FileReader(path).fileStream())
-            boxList.add(new BoxID((String)boxID));
+        for (String boxID : new FileReader(path).fileStream())
+            boxList.add(new BoxID(boxID));
     }
     
     public void computeBoxID() throws FileNotFoundException{

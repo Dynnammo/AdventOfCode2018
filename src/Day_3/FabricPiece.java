@@ -26,8 +26,7 @@ public class FabricPiece {
     
     
     public void parseClaims(String path) throws FileNotFoundException{
-        for (Object claim : new FileReader(path).fileStream()) {
-            String claimString = (String) claim;
+        for (String claimString : new FileReader(path).fileStream()) {
             String[] splited = claimString.split(" ");
             String[] distances = {splited[2].split(",")[0],splited[2].split(",")[1]};
             int leftDistance = Integer.parseInt(distances[0]);
@@ -63,5 +62,17 @@ public class FabricPiece {
             }
         }
         return overlapCounter;
-    }    
+    }
+    
+//    int getPureClaim(){
+//        for (int[] claim : claims) {
+//            for (int i = claim[0]; i < claim[1]+claim[3]; i++) {
+//                for (int j = 0; j < claim[0]+claim[2]; j++) {
+//                    if (this.piece.getM()[j][i] != 1) {
+//                        
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
