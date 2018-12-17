@@ -17,9 +17,11 @@ import utils.Matrix;
 public class FactoryPiece {
     ArrayList<Claim> claims;
     Matrix piece;
+    int size;
 
-    public FactoryPiece() {
-        piece = new Matrix(1000);
+    public FactoryPiece(int size) {
+        this.size=size;
+        piece = new Matrix(size);
         claims = new ArrayList<>();
     }
             
@@ -35,7 +37,7 @@ public class FactoryPiece {
 
     protected void executeClaims() {
         for (Claim claim : claims) {
-            Matrix m = new Matrix(1000);
+            Matrix m = new Matrix(size);
             m.fillSquare(claim);
             piece.sum(m);
         }
@@ -53,15 +55,21 @@ public class FactoryPiece {
         return overlapCounter;
     }
     
-//    int getPureClaim(){
-//        for (int[] claim : claims) {
-//            for (int i = claim[0]; i < claim[1]+claim[3]; i++) {
-//                for (int j = 0; j < claim[0]+claim[2]; j++) {
-//                    if (this.piece.getM()[j][i] != 1) {
-//                        
-//                    }
-//                }
-//            }
-//        }
-//    }
+    int getPureClaim(){
+        for (Claim c : claims) {
+            c.isPure = true;
+            outerloop:
+                for (int j = c.topDistance; j < c.topDistance+c.size[1]; j++) {
+                    for (int i = c.leftDistance; i < c.leftDistance+c.size[0]; i++) {
+                        if (this.piece.getM()[j][i] != 1) {
+                            c.isPure = false;
+                            break outerloop;
+                        }
+                    }
+                }
+                if (c.isPure)
+                    return c.ID;
+        }
+        return -1;
+    }
 }

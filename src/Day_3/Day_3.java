@@ -14,11 +14,12 @@ import java.io.FileNotFoundException;
 public class Day_3 {
     public static void main(String[] args) throws FileNotFoundException{
         String path = System.getProperty("user.dir") + "/src/Day_3/FabricPiece.txt";
-        FactoryPiece fp = new FactoryPiece();
+        FactoryPiece fp = new FactoryPiece(1000);
         fp.parseClaims(path);
         fp.executeClaims();
         int overlap = fp.getOverlapClaims();
-        System.out.println(overlap);
+        int pureClaim = fp.getPureClaim();
+        System.out.println(pureClaim);
     }
     
 }

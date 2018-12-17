@@ -13,11 +13,14 @@ public class Claim {
     public int leftDistance;
     public int topDistance;
     public int[] size;
+    public int ID;
+    public boolean isPure;
 
     public Claim(int leftDistance, int topDistance, int[] size) {
         this.leftDistance = leftDistance;
         this.topDistance = topDistance;
         this.size = size;
+        this.isPure = true;
     }
 
     Claim() {
@@ -26,6 +29,7 @@ public class Claim {
 
     public void parseString(String claimString) {
         String[] splited = claimString.split(" ");
+        ID = Integer.parseInt(splited[0].substring(1));
         String[] distances = {splited[2].split(",")[0],splited[2].split(",")[1]};
         leftDistance = Integer.parseInt(distances[0]);
         topDistance = Integer.parseInt(distances[1].substring(0, distances[1].length()-1));
