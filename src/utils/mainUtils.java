@@ -20,5 +20,16 @@ public class mainUtils {
 //        // Dictionnary
 //        Dictionnary d = new Dictionnary();
 //        d.print();
+
+        // Matrix
+//        Matrix m = new Matrix(10);
+//        Matrix n =  new Matrix(10);
+//        int[] size = {4,4};
+//        m.fillSquare(1, 3, size);
+//        n.fillSquare(3, 1, size);
+//        m.sum(n);
+//        System.out.println(m.toString());
+        
+        
     }
 }
