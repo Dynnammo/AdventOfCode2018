@@ -5,12 +5,15 @@
  */
 package utils;
 
+import java.text.ParseException;
+import java.util.Date;
+
 /**
  *
  * @author baptiste
  */
 public class mainUtils {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         // Binary tree+ Node
 //        BinaryTree bt =  new BinaryTree(20);
 //        bt.insertNode(0);
@@ -30,6 +33,12 @@ public class mainUtils {
 //        m.sum(n);
 //        System.out.println(m.toString());
         
-        
+        // Date Management
+        String s1 = "[2018-11-06 00:46]";
+        String s2 = "[2018-11-06 00:45]";
+        DateManager dm = new DateManager();
+        Date d1 = new DateManager().parseString(s1);
+        Date d2 = new DateManager().parseString(s2);
+        System.out.println(d1.after(d2));;
     }
 }
