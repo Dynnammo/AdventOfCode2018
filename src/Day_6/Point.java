@@ -17,6 +17,7 @@ class Point {
     boolean is_unusable;
     int abs;
     int ord;
+    int totalDist;
     
 
     public Point() {
@@ -36,9 +37,11 @@ class Point {
         return "Point{" + "index=" + abs + ' '+ ord + '}';
     }
 
-    void computePoint(ArrayList<Coordinate> coordinates) {
+    void computeManDistPoint(ArrayList<Coordinate> coordinates) {
+        totalDist = 0;
         for (Coordinate coordinate : coordinates) {
             int dist = computeManhattanDistance(coordinate);
+            totalDist += dist;
             if (dist < manhattanDistance) {
                 manhattanDistance = dist;
                 referer = coordinate;

@@ -17,8 +17,10 @@ public class Day6 {
         Grid g = new Grid(System.getProperty("user.dir")+ "/src/Day_6/Points.txt");
         g.computePoints();
         ArrayList<Coordinate> coordinates = g.getCoordinateField();
-        for (Coordinate coordinate : coordinates)
-            System.out.println(coordinate.toString());
+//        for (Coordinate coordinate : coordinates)
+//            System.out.println(coordinate.totalDist);
+        g.getTotalDistanceGridSize(10000);
+        System.out.println(g.greaterFieldSize);
 //        System.out.println(g);
     }
 }

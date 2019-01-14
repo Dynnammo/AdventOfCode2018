@@ -21,7 +21,7 @@ import utils.Matrix;
 public class Grid extends MainClass{
     Point[][] grid;
     ArrayList<Coordinate> coordinates =  new ArrayList<>();
-
+    int greaterFieldSize;
     public Grid(String path) throws FileNotFoundException {
         super(path);
         extractCoordinates();
@@ -93,9 +93,8 @@ public class Grid extends MainClass{
     public void computePoints(){
         for (Point[] points : grid) {
             for (Point point : points) {
-                if (point.getClass() != Coordinate.class)
-                        point.computePoint(coordinates);
-                        int i = 0;
+                point.computeManDistPoint(coordinates);
+                int i = 0;
             }
         }
     }
@@ -108,20 +107,6 @@ public class Grid extends MainClass{
         return pruneInfiniteFields();
     }
     
-    @Override
-    public String toString() {
-        String toString = "";
-        Point p = null;
-        for (int i = 0; i < this.grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++){
-                p = grid[i][j];
-                toString += p.referer.name ;
-            }
-            toString += '\n';
-        }
-        return toString;
-    }
-
     private ArrayList<Coordinate> pruneInfiniteFields() {
         int[] val = getExtremeValues();
         ArrayList<Coordinate> prunedCoordinates = coordinates;
@@ -140,5 +125,29 @@ public class Grid extends MainClass{
             prunedCoordinates.remove(rightColumn[i].referer);
         }
         return prunedCoordinates;
+    }
+    
+    public void getTotalDistanceGridSize(int maxDist){
+        Point p = null;
+        for (int i = 0; i < this.grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++){
+                p = grid[i][j];
+                greaterFieldSize +=  (p.totalDist < maxDist) ?  1 : 0;
+            }
+        }
+    }
+   
+    @Override
+    public String toString() {
+        String toString = "";
+        Point p = null;
+        for (int i = 0; i < this.grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++){
+                p = grid[i][j];
+                toString += p.referer.name ;
+            }
+            toString += '\n';
+        }
+        return toString;
     }
 }
