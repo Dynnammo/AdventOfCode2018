@@ -5,49 +5,66 @@
  */
 package utils;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  *
- * @author baptiste
+ * @author dynnammo
  */
 public class Node {
-    public int value;
-    public Node left;
-    public Node right;
-    
-    public Node(int value){
+    public char value;
+    public ArrayList<Node> children = new ArrayList<>();
+    public ArrayList<Node> ancestors = new ArrayList<>();
+
+    public Node(char value) {
         this.value = value;
-        right = null;
-        left = null;
     }
     
-    public Node insertNode(Node current, int value){
-        if ( current == null){
-            return new Node(value);
-        }
-        if (value < current.value)
-            current.left = insertNode(current.left, value);
-        else if (value > current.value)
-            current.right = insertNode(current.right,value);
-        else {
-            return current;
-        }
-        return current;
+    public void addChild(Node child){
+        if (!children.contains(child))
+            children.add(child); 
     }
     
-    public boolean findNode(Node current, int value){
-        if (current == null){
+    public void addAncestor(Node ancestor){
+        if (!ancestors.contains(ancestor))
+            ancestors.add(ancestor);
+    }
+
+    @Override
+    public String toString() {
+        String s = "Node{ \n" + "value=" + value + "\n children= ";
+        for (Node node : children) {
+            s += node.value + " ";
+        }
+        s += "\n ancestors =";
+        for (Node ancestor : ancestors) {
+            s += ancestor.value + " ";
+        }
+        s += '}';
+        return s;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + this.value;
+        hash = 61 * hash + Objects.hashCode(this.children);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        else {
-            if (current.value == value)
-                return true;
-            else {
-                if (current.value < value && current.right != null)
-                    return current.right.findNode(current.right, value);
-                else if (current.left != null)
-                    return current.left.findNode(current.left, value);
-            }             
+        if (getClass() != obj.getClass()) {
+            return false;
         }
-        return false;
+        final Node other = (Node) obj;
+        return this.value == other.value;
     }
 }

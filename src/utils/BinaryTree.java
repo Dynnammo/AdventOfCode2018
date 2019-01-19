@@ -10,19 +10,19 @@ package utils;
  * @author baptiste
  */
 public class BinaryTree {
-    public Node root;
+    public BinaryNode root;
 
     public BinaryTree(int value) {
-        root = new Node(value);
+        root = new BinaryNode(value);
     }
     
-    public BinaryTree(Node node){
+    public BinaryTree(BinaryNode node){
         this.root = node;
     }
     
     public BinaryTree(){}
     
-    public void toString(Node current) {
+    public void toString(BinaryNode current) {
         if (current == null)
             System.out.println("");
         else{
