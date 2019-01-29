@@ -16,8 +16,9 @@ public class Day_7 {
     public static void main(String[] args) throws FileNotFoundException {
         Steps s = new Steps();
         s.setPath(System.getProperty("user.dir")+ "/src/Day_7/Steps.txt");
-        s.setNodes();
-        s.order();
-        System.out.println(s);
+        s.setTasks();
+//        s.order();
+        int time = s.getExecutionTime(5);
+        System.out.println(time);
     }
 }

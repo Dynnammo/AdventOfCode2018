@@ -5,7 +5,6 @@
  */
 package Day_7;
 
-import com.sun.org.apache.bcel.internal.generic.IFEQ;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,92 +18,140 @@ import utils.Node;
  * @author dynnammo
  */
 public class Steps extends MainClass{
-    public ArrayList<Node> nodes = new ArrayList<>();
-    public Set<Node> bag = new HashSet<>();
-    public ArrayList<Node> order = new ArrayList<>();
+    public Set<Task> tasks = new HashSet<>();
+    public Set<Task> bag = new HashSet<>();
+    public ArrayList<Task> order = new ArrayList<>();
+    public Set<Worker> workers = new HashSet<>();
+    public int time;
     
-    public void setNodes() throws FileNotFoundException{
+    public void setTasks() throws FileNotFoundException{
         for (String s : new FileReader(this.getPath()).fileStream()) {
             String[] splitted = s.split("Step | must be finished before step | can begin.");
-            Node root = new Node(splitted[1].charAt(0));
-            Node child = new Node(splitted[2].charAt(0));
-            setNode(root,child);
+            Task root = new Task(splitted[1].charAt(0),(int) splitted[1].charAt(0));
+            Task child = new Task(splitted[2].charAt(0), (int) splitted[1].charAt(0));
+            setTask(root,child);
         }
     }
     
-    private void setNode(Node r, Node c){
-        Node root = getNode(r);
-        Node child = getNode(c);
-        root.addChild(child);
-        child.addAncestor(root);
+    private void setTask(Task r, Task c){
+        Task root = getTask(r);
+        Task child = getTask(c);
+        root.children.add(child);
+        child.ancestors.add(root);
     }
 
-    private Node getNode(Node n) {
-        if (!nodes.contains(n)){
-            nodes.add(n);
+    private Task getTask(Task n) {
+        if (tasks.add(n))
             return n;
-        }
         else {
-            for (Node node : nodes) {
-                if (node.equals(n))
-                    return nodes.get(nodes.indexOf(n));
+            for (Task task : tasks) {
+                if (task.equals(n))
+                    return task;
             }
         }
         return null;
     }
 
     private void getRoots(){
-        for (Node node : nodes) {
-            if (node.ancestors.isEmpty()) 
-               bag.add(node);
+        for (Task task : tasks) {
+            if (task.ancestors.isEmpty()) 
+               bag.add(task);
         }
     }
     
     public void order(){
         getRoots();
         while (!bag.isEmpty()) {            
-            Node n = get_first_available();
-            validate_node(n);
-            remove_from_bag(n);
+            Task n = getFirstAvailable();
+            validateTask(n);
+            bag.remove(n);
         }
     }
     
-    @Override
-    public String toString() {
-        String s = "Steps{" + "nodes=";
-        for (Node node : order)
-            s += node.value + "";
-        return s + '}';
+    private void validateTask(Task n){
+        order.add(n);
+        n.children.forEach((child) -> {
+            bag.add((Task) child);
+        });
     }
-    
-    private Node get_first_available(){
+
+    private boolean isAvailable(Task task) {
+        for (Node ancestor : task.ancestors) {
+            if (!order.contains(ancestor))
+                return false;
+        }
+        if (task.isCompleting)
+            return false;
+        return true;
+    }
+
+    private Task getFirstAvailable(){
         char value = 255;
-        for (Node node : bag) {
-            value = (node.value < value && is_available(node)) ? node.value : value;
+        for (Task task : bag) {
+            value = (task.value < value && isAvailable(task)) ? task.value : value;
         }
-        for (Node node : bag) {
-            if (node.value == value)
-                return node;
+        for (Task task : bag) {
+            if (task.value == value)
+                return task;
         }
         return null;
     }
     
-    private void validate_node(Node n){
-        order.add(n);
-        n.children.forEach((child) -> {
-            bag.add(child);
-        });
-    }
-
-    private void remove_from_bag(Node n) {
-        bag.remove(n);
-    }
-
-    private boolean is_available(Node node) {
-        for (Node ancestor : node.ancestors) {
-            if (!order.contains(ancestor))
-                return false;
+    public int getExecutionTime(int workersNumber){
+        getRoots();
+        for (int i = 0; i < workersNumber; i++)
+            workers.add(new Worker());
+        int time = 0;
+        boolean executionIsOver = false;
+        while(!executionIsOver){
+            checkWorkers(time);
+            assignAvailableTasks(time);
+            if (bag.isEmpty()) {
+                executionIsOver = true;
+            }
+            time++;
         }
-        return true;
+        return time;
+    }
+    
+    private void checkWorkers(int time){
+        for (Worker worker : workers) {
+            if (!worker.isAvailable) {
+                if (time - worker.beginTaskTime >= worker.task.duration) {
+                    validateTask(worker.task);
+                    bag.remove(worker.task);
+                    worker.clearTask();
+                }
+            }
+        }
+    }
+    
+    private void assignAvailableTasks(int time){
+        Task t = getFirstAvailable();
+        Task tempTask = new Task('!', 0);
+        while (t != null && t != tempTask){
+            tempTask = t;
+            if (!t.isCompleting)
+                assignWorkerToTask(t, time);   
+            t = getFirstAvailable();
+        }
+    }
+        
+    private void assignWorkerToTask(Task t, int time){
+        for (Worker worker : workers) {
+            if (worker.isAvailable) {
+                worker.setTask(t, time);
+                return;
+            }
+        }
+    }
+        
+    
+    @Override
+    public String toString() {
+        String s = "Steps{" + "tasks=";
+        for (Task task : order)
+            s += task.value + "";
+        return s + '}';
     }
 }

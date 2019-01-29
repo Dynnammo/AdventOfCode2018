@@ -6,7 +6,9 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
@@ -14,21 +16,19 @@ import java.util.Objects;
  */
 public class Node {
     public char value;
-    public ArrayList<Node> children = new ArrayList<>();
-    public ArrayList<Node> ancestors = new ArrayList<>();
+    public Set<Node> children = new HashSet<>();
+    public Set<Node> ancestors = new HashSet<>();
 
     public Node(char value) {
         this.value = value;
     }
     
     public void addChild(Node child){
-        if (!children.contains(child))
-            children.add(child); 
+        children.add(child); 
     }
     
     public void addAncestor(Node ancestor){
-        if (!ancestors.contains(ancestor))
-            ancestors.add(ancestor);
+        ancestors.add(ancestor);
     }
 
     @Override
