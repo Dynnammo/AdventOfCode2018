@@ -31,4 +31,15 @@ public class FileReader {
             arrayStrings.add((String) obj);
         return arrayStrings;
     }
+    
+    public ArrayList<String> oneLineStream() throws FileNotFoundException{
+        File f = new File(this.path);
+        java.io.FileReader fr = new java.io.FileReader(f);
+        BufferedReader br = new BufferedReader(fr);
+        ArrayList<String> arrayStrings = new ArrayList<>();
+        Object[] stream = br.lines().toArray();
+        for (String s : ((String) stream[0]).split(" "))
+            arrayStrings.add((String) s);
+        return arrayStrings;
+    }
 }
