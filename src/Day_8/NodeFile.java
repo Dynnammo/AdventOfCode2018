@@ -14,54 +14,42 @@ import utils.MainClass;
  *
  * @author dynnammo
  */
+
 class NodeFile extends MainClass{
     ArrayList<Integer> a = new ArrayList<>();
     int metadataSum = 0;
-    
+    int value = 0;
+    Node root;
     NodeFile(String path) throws FileNotFoundException{
         this.setPath(path);
         for (String s : new FileReader(this.getPath()).oneLineStream())
             a.add(Integer.parseInt(s));
-    }
-
-    void getMetadataSum() throws java.lang.Exception {
-        getMetadataSum(0);
+        root = new Node(a);
     }
     
-    private void getMetadataSum(int i) throws java.lang.Exception {
-        int nbChild = a.get(i);
-        if (nbChild == 0) {
-            if (i != 0)
-                a.set(i-2, (int) a.get(i-2)-1);
-            int nbMetadata = a.get(i+1);
-            a.remove(i);
-            a.remove(i);
-            for (int j = 0; j < nbMetadata; j++){
-                metadataSum += a.get(i);
-                a.remove(i);
-            }
-            if (a.isEmpty())
-                return;
-            getMetadataSum(i-2);
+    void buildTree(){
+        buildNode(Node.index, root);
+        System.out.println("END");
+    }
+    
+    void buildNode(int index,  Node fatherNode){
+        Node currentNode = new Node(fatherNode, Node.index);
+        fatherNode.getNewChild(currentNode);
+        if (a.get(Node.index) == 0)
+            currentNode.getNewChild(new Node(currentNode, Node.index));
+        while (currentNode.childrenVisited != currentNode.childrenNumber)
+            buildNode(Node.index, currentNode);
+        currentNode.setMetadata();
+    }
+    
+    void computeMetadata(Node origin){
+        for (Node node : origin.children) {
+            metadataSum += node.metadataSum();
+            computeMetadata(node);
         }
-        if (a.isEmpty()) {
-            return;
-        }
-        getMetadataSum(i+2);
-    }
-
-    @Override
-    public String toString() {
-        String s = "";
-        for (Integer integer : a)
-            s += integer + " ";
-        return s;
-    }
-
-    private Exception Exception() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
-    
+    void computeValue(Node origin){
+        value = origin.nodeValue();
+    }
 }

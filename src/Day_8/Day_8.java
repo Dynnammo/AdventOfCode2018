@@ -14,7 +14,12 @@ import java.io.FileNotFoundException;
 public class Day_8 {
     public static void main(String[] args) throws FileNotFoundException, Exception {
         NodeFile nf = new NodeFile(System.getProperty("user.dir")+ "/src/Day_8/NodeFile.txt");
-        nf.getMetadataSum();
+//        nf.getMetadataSum();
+//        System.out.println(nf.metadataSum);
+        nf.buildTree();
+        nf.computeMetadata(nf.root);
         System.out.println(nf.metadataSum);
+        nf.computeValue(nf.root.children.get(0));
+        System.out.println(nf.value);
     }
 }
