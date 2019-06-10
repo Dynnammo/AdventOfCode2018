@@ -15,12 +15,12 @@ import utils.MainClass;
  * @author dynnammo
  */
 
-class NodeFile extends MainClass{
+class Tree extends MainClass{
     ArrayList<Integer> a = new ArrayList<>();
     int metadataSum = 0;
     int value = 0;
     Node root;
-    NodeFile(String path) throws FileNotFoundException{
+    Tree(String path) throws FileNotFoundException{
         this.setPath(path);
         for (String s : new FileReader(this.getPath()).oneLineStream())
             a.add(Integer.parseInt(s));
@@ -28,17 +28,16 @@ class NodeFile extends MainClass{
     }
     
     void buildTree(){
-        buildNode(Node.index, root);
-        System.out.println("END");
+        buildNode(root);
     }
     
-    void buildNode(int index,  Node fatherNode){
-        Node currentNode = new Node(fatherNode, Node.index);
+    void buildNode(Node fatherNode){
+        Node currentNode = new Node(fatherNode);
         fatherNode.getNewChild(currentNode);
         if (a.get(Node.index) == 0)
-            currentNode.getNewChild(new Node(currentNode, Node.index));
+            currentNode.getNewChild(new Node(currentNode));
         while (currentNode.childrenVisited != currentNode.childrenNumber)
-            buildNode(Node.index, currentNode);
+            buildNode(currentNode);
         currentNode.setMetadata();
     }
     
