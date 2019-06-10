@@ -52,16 +52,16 @@ public class Game {
         }
     }
     
-    public int[] getWinner(){
-        int max = 0;
-        int winnerIndex = 0;
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
+    public long[] getWinner(){
+        long max = 0;
+        long winnerIndex = 0;
+        for (long i = 0; i < players.size(); i++) {
+            Player player = players.get((int) i);
             if (player.score > max){
                 winnerIndex = i;
                 max = player.score;
             }
         }
-        return new int[]{winnerIndex,max};
+        return new long[]{winnerIndex,max};
     }
 }

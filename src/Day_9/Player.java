@@ -10,7 +10,7 @@ package Day_9;
  * @author dynnammo
  */
 class Player {
-    int score;
+    long score;
 
     public Player() {
         this.score = 0;

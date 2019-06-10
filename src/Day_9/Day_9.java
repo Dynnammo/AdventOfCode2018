@@ -11,9 +11,9 @@ package Day_9;
  */
 public class Day_9 {
     public static void main(String[] args) {
-        Game g = new Game(464,70918);
+        Game g = new Game(464,7091800);
         g.execute();
-        int[] results = g.getWinner();
+        long[] results = g.getWinner();
         System.out.println(results[0] + " " + results[1]);
     }
 }
